@@ -4,8 +4,9 @@
 
 }
 
+
 body{
-    width: 80vw;
+    width: 40vw;
     height:100vh;
     justify-content: center;
     align-items: center;
@@ -40,6 +41,9 @@ body{
     font-size: 1.5rem;
     font-weight: bold;  
     padding: 10px 20px;
+    color: red;
+
+    
 }
 
 .button{
