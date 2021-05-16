@@ -7,6 +7,7 @@ const scoreText = document.getElementById('score')
 let shuffledQuestions, currentQuestionIndex
 
 var score = 0;
+var questionCounter = 0;
 
 
 startButton.addEventListener('click', startGame)
@@ -33,6 +34,33 @@ function setNextQuestion() {
 
 //answer box
 function showQuestion(question) {
+if (questionCounter ==8){
+  endGame()
+} else {
+  
+  nextQuestion(question)
+  
+}
+
+}
+
+// endGame() {
+//   // hide buttons
+
+//   // display fields to enter name for high score
+
+
+//   // show button to show high score
+
+//   //showHighScoreButton
+
+// }
+
+// showHighScore(){ 
+// //
+// }
+
+function nextQuestion(question) {
   questionElement.innerText = question.question
   question.answers.forEach(answer => {
     const button = document.createElement('button')
@@ -58,41 +86,38 @@ function resetState() {
 }
 
 function selectAnswer(e) {
-  console.log('button is click')
 
   const selectedButton = e.target
   const correct = selectedButton.dataset.correct
-  console.log('score = ' + correct )
-  // if (correct == true) {
-  //   console.log('answer is correct')
-  //   score++;
-  // }
-  console.log('score = ' + score)
-  setStatusClass(document.body, correct)
+  calculateScore(document.body, correct)
   button => {
-    setStatusClass(button, button.dataset.correct)
+    calculateScore(button, button.dataset.correct)
   }
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove('hide')
-  } else {
-    startButton.innerText = 'Restart'
-    startButton.classList.remove('hide')
-  }
+  // if (shuffledQuestions.length > currntQueestionIndex + 1) {
+  //   nextButton.classList.remove('hide')
+  // } else {
+  //   startButton.innerText = 'Restart'
+  //   startButton.classList.remove('hide')
+  // }
+  currentQuestionIndex++
+  setNextQuestion()
 }
 
 
-function setStatusClass(element, correct) {
+
+function calculateScore(element, correct) {
+  questionCounter++
+  console.log(correct)
   clearStatusClass(element)
   if (correct) {
     element.classList.add('correct')
     score++
+  } else {
+    element.classList.add('wrong')
+    if(score > 0){
+      score--
+    }
   }
-  // } else {
-  //   element.classList.add('wrong')
-  //   if(score > 0){
-  //     score--
-  //   }
-  // }
 }
 
 function clearStatusClass(element) {
@@ -100,26 +125,24 @@ function clearStatusClass(element) {
   element.classList.remove('wrong')
 }
 
-
 // //question
-
  const questions = [
   {
-    question: 'What is 2 + 2?',
+    question: 'What does HTML stand for??',
     answers: [
-      { text: '4', correct: true },
-      { text: 'YES!!!', correct: true },
-      { text: 'Um no', correct: false },
-      { text: '22', correct: false }
+      { text: 'Hypertext Markup Language', correct: true },
+      { text: 'Hide till Milley Leave', correct: false },
+      { text: 'Hyper text makeup language', correct: false },
+      { text: 'I dont know', correct: false }
     ]
   },
   {
-    question: 'What is 5 + 5?',
+    question: 'What is DOM ',
     answers: [
-      { text: '10', correct: true },
-      { text: '2', correct: false },
-      { text: '3', correct: false },
-      { text: '11', correct: false }
+      { text: 'Document Object Model ', correct: true },
+      { text: 'Document Over Model', correct: false },
+      { text: 'Document OM', correct: false },
+      { text: 'Demand over model ', correct: false }
     ]
   },
   {
@@ -127,41 +150,70 @@ function clearStatusClass(element) {
     answers: [
       { text: 'Kinda', correct: false },
       { text: 'YES!!!', correct: true },
-      { text: 'Um no', correct: false },
-      { text: 'IDK', correct: false }
+      { text: 'Next year', correct: false },
+      { text: 'Let me ask my mom', correct: false }
     ]
   },
   {
-    question: 'What is 4 * 2?',
+    question: 'What does || mean?',
     answers: [
-      { text: '6', correct: false },
-      { text: 'YES!!!', correct: true },
-      { text: 'Um no', correct: false },
-      { text: '8', correct: true }
+      { text: 'And', correct: false },
+      { text: 'Or', correct: true },
+      { text: 'Greater than', correct: false },
+      { text: 'Ask for help', correct: false }
+    ]
+  },
+  {
+    question: 'What is a boolean?',
+    answers: [
+      { text: 'Honey BOO BOO', correct: false },
+      { text: 'Rreturns either of two values i.e. true or false', correct: true },
+      { text: '2+2', correct: false },
+      { text: 'equal to', correct: false }
+    ]
+  },
+  {
+    question: 'What does JS stand for?',
+    answers: [
+      { text: 'Jet ski', correct: false },
+      { text: 'Javascript', correct: true },
+      { text: 'Jack Stand', correct: false },
+      { text: 'Jim Stand', correct: false }
+    ]
+  },
+  {
+    question: 'What is API?',
+    answers: [
+      { text: 'Apple Product Interface', correct: false },
+      { text: 'Application Programming Interface', correct: true },
+      { text: 'Ape Plante Interface', correct: false },
+      { text: 'Ate Pete Ice-cream', correct: false }
+    ]
+  },
+  {
+    question: 'What does this && mean',
+    answers: [
+      { text: 'Or', correct: false },
+      { text: 'And', correct: true },
+      { text: 'Maybe', correct: false },
+      { text: 'Yes', correct: true }
     ]
   } 
+
 ]
-
-
-
-
-
-
-
 
 //set timer
 document.addEventListener('DOMContentLoaded', () => {
     const timeLeftDisplay = document.querySelector('#time-left')
     const startButton = document.querySelector ('#start-btn') 
-    let timeLeft = 10;
+    let timeLeft = 30;
 
     function countDown() {
         setInterval(function() {
             if(timeLeft <= 0) {
                 clearInterval(timeLeft = 0)
                 // // alert('Quiz Over!!!!!');
-             
-          
+                      
             }
             timeLeftDisplay.innerHTML = timeLeft
             timeLeft -=1            
